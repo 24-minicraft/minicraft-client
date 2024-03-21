@@ -14,5 +14,9 @@ const config: Config.InitialOptions = {
         },
     },
     testTimeout: 30000,
+    moduleNameMapper: {
+        "^@/(.*)$": "<rootDir>/src/$1",
+    },
 }
+
 export default config
