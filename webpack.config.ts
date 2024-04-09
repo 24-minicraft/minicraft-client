@@ -33,6 +33,16 @@ const moduleRules = [
         test: /\.s[ac]ss$/i,
         use: ["style-loader", "css-loader", "sass-loader"],
     },
+    {
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        use: {
+            loader: "file-loader",
+            options: {
+                name: "[name].[ext]",
+                outputPath: "images/",
+            },
+        },
+    },
 ]
 
 const plugins = [
