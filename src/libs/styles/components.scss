@@ -1,0 +1,19 @@
+@import "../../libs/styles/theme.scss";
+
+// 초록색 버튼
+.greenbutton {
+    @include font("ls");
+    border-radius: 4px;
+    border: 1px solid $green_300;
+    background-color: $green_100;
+    padding: 6px 40px;
+    gap: 4px;
+    width: 100%;
+    transition: all 0.1s;
+    &:hover {
+        background-color: $green_200;
+    }
+    &:active {
+        background-color: $green_100;
+    }
+}
