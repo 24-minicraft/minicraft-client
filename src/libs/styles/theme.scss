@@ -41,6 +41,56 @@ $line_height_body_large: 1.5em; // 24px / 16px = 1.5em
 $line_height_body_medium: 1.428571em; // 20px / 14px = 1.428571em
 $line_height_body_small: 1.5em; // 18px / 12px = 1.5em
 
+// font
+// how to use : @include font("dl");
+@mixin font($size) {
+    @if $size == "dl" {
+        font-size: $font_size_display_large;
+        line-height: $line_height_display_large;
+    } @else if $size == "dm" {
+        font-size: $font_size_display_medium;
+        line-height: $line_height_display_medium;
+    } @else if $size == "ds" {
+        font-size: $font_size_display_small;
+        line-height: $line_height_display_small;
+    } @else if $size == "hl" {
+        font-size: $font_size_headline_large;
+        line-height: $line_height_headline_large;
+    } @else if $size == "hm" {
+        font-size: $font_size_headline_medium;
+        line-height: $line_height_headline_medium;
+    } @else if $size == "hs" {
+        font-size: $font_size_headline_small;
+        line-height: $line_height_headline_small;
+    } @else if $size == "tl" {
+        font-size: $font_size_title_large;
+        line-height: $line_height_title_large;
+    } @else if $size == "tm" {
+        font-size: $font_size_title_medium;
+        line-height: $font_size_title_medium;
+    } @else if $size == "ts" {
+        font-size: $font_size_title_small;
+        line-height: $line_height_title_small;
+    } @else if $size == "ll" {
+        font-size: $font_size_label_large;
+        line-height: $line_height_label_large;
+    } @else if $size == "lm" {
+        font-size: $font_size_label_medium;
+        line-height: $line_height_label_medium;
+    } @else if $size == "ls" {
+        font-size: $font_size_label_small;
+        line-height: $line_height_label_small;
+    } @else if $size == "bl" {
+        font-size: $font_size_body_large;
+        line-height: $line_height_body_large;
+    } @else if $size == "bm" {
+        font-size: $font_size_body_medium;
+        line-height: $line_height_body_medium;
+    } @else if $size == "bs" {
+        font-size: $font_size_body_small;
+        line-height: $line_height_body_small;
+    }
+}
 /////////////////* Color */////////////////
 
 // Primary Green
