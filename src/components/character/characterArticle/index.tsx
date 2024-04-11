@@ -1,17 +1,9 @@
+import { CharacterArticleType } from "@/type/character.type"
 import { BattleIcon, CollectionIcon, DefenseIcon, HealthIcon, HealthPlusIcon, LuckyIcon } from "@/assets"
 import "./style.scss"
 
-interface Character {
-    image: string
-    name: string
-    health: number
-    defense: number
-    luck: number
-    time: number
-}
-
 interface CharacterArticleProps {
-    data: Character
+    data: CharacterArticleType
 }
 
 export const CharacterArticle = ({ data }: CharacterArticleProps) => {

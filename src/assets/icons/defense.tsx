@@ -1,6 +1,4 @@
-interface IconProps {
-    size?: number
-}
+import { IconProps } from "@/type/common.type"
 
 const DefenseIcon = ({ size = 16 }: IconProps) => {
     return (

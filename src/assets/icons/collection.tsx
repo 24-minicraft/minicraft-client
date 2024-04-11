@@ -1,6 +1,4 @@
-interface IconProps {
-    size?: number
-}
+import { IconProps } from "@/type/common.type"
 
 const CollectionIcon = ({ size = 16 }: IconProps) => {
     return (
