@@ -1,1 +1,2 @@
-export * from "./basicLogo.svg"
+import basicLogo from "./basicLogo.svg"
+export { basicLogo }
