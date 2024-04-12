@@ -1,11 +1,9 @@
 import { Fragment } from "react"
 import { useInput, useToggle } from "@/libs/hooks"
-import { DefaultInput } from "../../defaultInput"
-import { LabelInput } from "../../common/labelInput"
-import { PasswordInput } from "../../passwordInput"
+import { AuthInput } from "../../authInput"
 
 export const Login = () => {
-    const { value: pw, onToggle } = useToggle(false)
+    const { value: pw, onToggle: onTogglePw } = useToggle(false)
     const {
         form: value,
         setForm: setValue,
@@ -17,22 +15,25 @@ export const Login = () => {
 
     return (
         <Fragment>
-            <LabelInput label="아이디">
-                <DefaultInput
-                    name="id"
-                    disabled={false}
-                    value={value.id}
-                    onChange={onChange}
-                    placeholder="아이디를 입력해주세요"
-                />
-            </LabelInput>
-            <PasswordInput
+            <AuthInput
+                label="아이디"
+                name="id"
+                disabled={false}
+                value={value.id}
+                onChange={onChange}
+                placeholder="아이디를 입력해주세요"
+                type="text"
+            />
+            <AuthInput
+                name="password"
                 label="비밀번호"
-                placeholder="비밀번호를 입력해주세요"
                 visible={pw}
                 value={value.password}
                 onChange={onChange}
-                onToggle={onToggle}
+                onToggle={onTogglePw}
+                placeholder="설정할 비밀번호를 입력해주세요"
+                disabled={false}
+                type={pw ? "text" : "password"}
             />
             <button className="grayButton" style={{ height: 50 }}>
                 로그인

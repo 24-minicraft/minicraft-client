@@ -1,9 +1,7 @@
 import { Fragment } from "react"
-import { LabelInput } from "../../common/labelInput"
-import { DefaultInput } from "../../defaultInput"
-import { PasswordInput } from "../../passwordInput"
 import { useInput, useToggle } from "@/libs/hooks"
 import "../../../../libs/styles/components.scss"
+import { AuthInput } from "../../authInput"
 
 export const SignUp = () => {
     const { value: pw1, onToggle: onTogglePw1 } = useToggle(false)
@@ -20,24 +18,27 @@ export const SignUp = () => {
 
     return (
         <Fragment>
-            <LabelInput label="아이디">
-                <DefaultInput
-                    name="id"
-                    disabled={false}
-                    value={value.id}
-                    onChange={onChange}
-                    placeholder="아이디를 입력해주세요"
-                />
-            </LabelInput>
-            <PasswordInput
+            <AuthInput
+                label="아이디"
+                name="id"
+                disabled={false}
+                value={value.id}
+                onChange={onChange}
+                placeholder="아이디를 입력해주세요"
+                type="text"
+            />
+            <AuthInput
                 label="비밀번호"
+                name="password"
                 visible={pw1}
                 value={value.password}
                 onChange={onChange}
                 onToggle={onTogglePw1}
                 placeholder="설정할 비밀번호를 입력해주세요"
+                disabled={false}
+                type={pw1 ? "text" : "password"}
             />
-            <PasswordInput
+            <AuthInput
                 label="비밀번호"
                 name="rePassword"
                 visible={pw2}
@@ -45,6 +46,8 @@ export const SignUp = () => {
                 onChange={onChange}
                 onToggle={onTogglePw2}
                 placeholder="설정한 비밀번호를 재입력해주세요"
+                disabled={false}
+                type={pw2 ? "text" : "password"}
             />
             <button className="grayButton" style={{ height: 50 }}>
                 로그인

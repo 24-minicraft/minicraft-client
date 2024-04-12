@@ -1,18 +1,6 @@
 @import "../.../../../../libs/styles/theme.scss";
 
-.passwordInputBlockInSide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2px 5px;
-    width: 100%;
-    height: 100%;
-    color: $gray_50;
-    background-color: $gray_600;
-    border-radius: 4px;
-}
-
-.passwordInputBlockOutSide {
+.authInputBlockOutSide {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -22,4 +10,17 @@
     border: 1px solid $gray_900;
     background-color: $gray_700;
     border-radius: 4px;
+}
+
+.authInputBlockInSide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 5px;
+    width: 100%;
+    height: 100%;
+    color: $gray_50;
+    background-color: $gray_600;
+    border-radius: 4px;
+    gap: 30px;
 }
