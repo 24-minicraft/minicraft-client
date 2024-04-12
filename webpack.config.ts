@@ -13,6 +13,7 @@ const devServer = {
     },
     compress: true,
     port: 3000,
+    historyApiFallback: true,
 }
 
 const resolveConfig = {
