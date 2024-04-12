@@ -64,6 +64,11 @@
         cursor: default;
         pointer-events: none;
     }
+
+    &::placeholder {
+        @include font("bm");
+        color: $gray_200;
+    }
 }
 
 //label input
@@ -77,4 +82,3 @@
     font: $font("ll");
     color: $gray_50;
 }
-

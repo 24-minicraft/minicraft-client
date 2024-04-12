@@ -7,10 +7,11 @@ export interface IInputProps {
     type: "submit" | "text" | "password"
     value: string | number
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+    placeholder?: string
 }
 
 const Input = React.forwardRef<HTMLInputElement, IInputProps>(function (props, ref) {
-    const { value, onChange, name, type, disabled } = props
+    const { value, onChange, name, type, disabled, placeholder } = props
 
     return (
         <input
@@ -21,6 +22,7 @@ const Input = React.forwardRef<HTMLInputElement, IInputProps>(function (props, r
             onChange={onChange}
             ref={ref}
             disabled={disabled}
+            placeholder={placeholder}
             autoComplete="off"
         />
     )
