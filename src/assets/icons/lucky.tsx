@@ -1,6 +1,6 @@
-import { IconProps } from "@/type/common.type"
+import { IIconProps } from "@/types/common.type"
 
-const LuckyIcon = ({ size = 16 }: IconProps) => {
+const LuckyIcon = ({ size = 16 }: IIconProps) => {
     return (
         <svg
             width={size}

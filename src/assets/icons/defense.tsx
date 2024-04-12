@@ -1,6 +1,6 @@
-import { IconProps } from "@/type/common.type"
+import { IIconProps } from "@/types/common.type"
 
-const DefenseIcon = ({ size = 16 }: IconProps) => {
+const DefenseIcon = ({ size = 16 }: IIconProps) => {
     return (
         <svg width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="16" height="16" fill="url(#pattern0_255_20)" />

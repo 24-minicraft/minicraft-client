@@ -1,1 +1,1 @@
-export * from "./basicLogo.svg"
+export { default as basicLogo } from "./basicLogo.svg"
