@@ -1,12 +1,12 @@
-import { CharacterArticleType } from "@/type/character.type"
-import { BattleIcon, CollectionIcon, DefenseIcon, HealthIcon, HealthPlusIcon, LuckyIcon } from "@/assets"
+import { ICharacterArticle } from "@/types/character.type"
+import { BattleIcon, CollectionIcon, DefenseIcon, HealthIcon, HealthPlusIcon, LuckyIcon } from "@/assets/icons"
 import "./style.scss"
 
-interface CharacterArticleProps {
-    data: CharacterArticleType
+interface ICharacterArticleProps {
+    data: ICharacterArticle
 }
 
-export const CharacterArticle = ({ data }: CharacterArticleProps) => {
+export const CharacterArticle = ({ data }: ICharacterArticleProps) => {
     return (
         <div className="container">
             <div className="state">
@@ -47,11 +47,11 @@ export const CharacterArticle = ({ data }: CharacterArticleProps) => {
             </div>
 
             <div className="buttonContainer">
-                <button className="greenbutton">
+                <button className="greenButton">
                     <CollectionIcon />
                     파견
                 </button>
-                <button className="greenbutton">
+                <button className="greenButton">
                     <BattleIcon />
                     전투
                 </button>
