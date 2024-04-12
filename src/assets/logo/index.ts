@@ -1,2 +1,1 @@
-import basicLogo from "./basicLogo.svg"
-export { basicLogo }
+export { default as basicLogo } from "./basicLogo.svg"
