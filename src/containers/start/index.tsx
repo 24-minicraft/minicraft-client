@@ -1,4 +1,4 @@
-import { customCookie } from "@/libs/customCookie"
+import { customCookie } from "@/libs/CustomCookie"
 import { Fragment } from "react"
 import "../../libs/styles/components.scss"
 import "./style.scss"
