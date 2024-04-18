@@ -1,6 +1,6 @@
 import { GrassBlockImg } from "@/assets"
 import "./style.scss"
-import { ChangeAreaType } from "@/type/area.type"
+import { ChangeAreaType } from "@/types/area.type"
 
 interface SelectAreaProps {
     data: ChangeAreaType
