@@ -1,4 +1,4 @@
-export interface CharacterArticleType {
+export interface ICharacterArticle {
     image: string
     name: string
     health: number
