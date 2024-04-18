@@ -1,7 +1,106 @@
-.authFormBlock {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    align-items: center;
-    justify-content: center;
+@import "../../../libs/styles/theme.scss";
+
+@include mobile {
+    .authFormBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 80%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 80%;
+        margin-bottom: 12%;
+    }
+}
+
+@include tabletToMobile {
+    .authFormBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 60%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 65%;
+        margin-bottom: 12%;
+    }
+}
+
+@include tablet {
+    .authFormBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 50%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 55%;
+        margin-bottom: 12%;
+    }
+}
+
+@include laptopToTablet {
+    .authFormBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 40%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 45%;
+        margin-bottom: 14%;
+    }
+}
+
+@include laptop {
+    .authFormBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        width: 35%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 40%;
+        margin-bottom: 5%;
+    }
+}
+
+@include desktopToLaptop {
+    .authFormBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        width: 30%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 35%;
+        margin-bottom: 5%;
+    }
+}
+
+@include desktop {
+    .authFormBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        width: 30%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 35%;
+        margin-bottom: 5%;
+    }
 }
