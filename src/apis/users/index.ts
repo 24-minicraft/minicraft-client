@@ -7,7 +7,7 @@ const ROUTER = "/users"
 
 export const useLogin = () => {
     const response = async (params: IAuthParam) => {
-        return (await instance.post<ITokenResponse>(`/${ROUTER}/login`, params)).data
+        return (await instance.post<ITokenResponse>(`${ROUTER}/login`, params)).data
     }
 
     return useMutation({
