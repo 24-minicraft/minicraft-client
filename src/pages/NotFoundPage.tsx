@@ -1,9 +1,11 @@
+import NotFound from "@/components/notFound"
+import { StartLayout } from "@/libs/layout/startLayout"
+
 const NotFoundPage = () => {
     return (
-        <div>
-            404
-            <button>처음으로 가기</button>
-        </div>
+        <StartLayout>
+            <NotFound />
+        </StartLayout>
     )
 }
 
