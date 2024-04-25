@@ -22,9 +22,7 @@ export const AuthInput = ({ value, onChange, name, placeholder, label, visible, 
                         disabled={false}
                         placeholder={placeholder}
                     />
-                    {visible !== undefined && onToggle && type === "password" && (
-                        <VisibleIcon visible={visible} onClick={onToggle} />
-                    )}
+                    {visible !== undefined && onToggle && <VisibleIcon visible={visible} onClick={onToggle} />}
                 </div>
             </div>
         </LabelInput>

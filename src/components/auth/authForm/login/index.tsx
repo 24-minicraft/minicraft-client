@@ -1,25 +1,31 @@
 import { Fragment } from "react"
 import { useInput, useToggle } from "@/libs/hooks"
 import { AuthInput } from "../../authInput"
+import { useLogin } from "@/apis/users"
 
 export const Login = () => {
+    const { mutate: loginMutation } = useLogin()
     const { value: pw, onToggle: onTogglePw } = useToggle(false)
     const {
         form: value,
         setForm: setValue,
         onChange,
     } = useInput({
-        id: "",
+        account_id: "",
         password: "",
     })
+
+    const onLogin = () => {
+        if (value.account_id && value.password) loginMutation(value)
+    }
 
     return (
         <Fragment>
             <AuthInput
                 label="아이디"
-                name="id"
+                name="account_id"
                 disabled={false}
-                value={value.id}
+                value={value.account_id}
                 onChange={onChange}
                 placeholder="아이디를 입력해주세요"
                 type="text"
@@ -35,7 +41,7 @@ export const Login = () => {
                 disabled={false}
                 type={pw ? "text" : "password"}
             />
-            <button className="grayButton" style={{ height: 50 }}>
+            <button className="grayButton" style={{ height: 50 }} onClick={onLogin}>
                 로그인
             </button>
         </Fragment>

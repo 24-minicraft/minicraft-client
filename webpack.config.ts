@@ -1,10 +1,13 @@
 const path = require("path")
+const Dotenv = require("dotenv-webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
 
 const entry = "./src/index.tsx"
+
 const output = {
     filename: "index_bundle.js",
+    path: path.resolve(__dirname, "dist"),
 }
 
 const devServer = {
@@ -47,6 +50,7 @@ const moduleRules = [
 ]
 
 const plugins = [
+    new Dotenv(),
     new ForkTsCheckerWebpackPlugin(),
     new HtmlWebpackPlugin({
         template: "./public/index.html",
