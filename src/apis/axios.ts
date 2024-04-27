@@ -35,6 +35,7 @@ instance.interceptors.response.use(
                 } else {
                     customCookie.remove.accessToken()
                     customCookie.remove.refreshToken()
+                    window.location.href = "/"
                 }
             } else return Promise.reject(error)
         }
