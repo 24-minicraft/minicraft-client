@@ -10,7 +10,7 @@ export const CharacterArticle = ({ data }: ICharacterArticleProps) => {
     return (
         <div className="container">
             <div className="state">
-                <img src={data.image} className="character" />
+                {/* <img src={data.image} className="character" /> */}
 
                 <div className="infoContainer">
                     <p className="titleLarge">{data.name}</p>
@@ -22,10 +22,10 @@ export const CharacterArticle = ({ data }: ICharacterArticleProps) => {
                             <div className="plus">
                                 <p className="plus">
                                     (
-                                    {Math.floor(data.time / 60)
+                                    {Math.floor(100 / 60)
                                         .toString()
                                         .padStart(2, "0")}
-                                    :{data.time % 60}
+                                    :{100 % 60}
                                 </p>
                                 <HealthPlusIcon />
                                 <p className="plus">)</p>
@@ -39,7 +39,7 @@ export const CharacterArticle = ({ data }: ICharacterArticleProps) => {
                             <DefenseIcon />
                         </div>
                         <div className="iconContainer">
-                            <p className="titleMedium">{data.luck}</p>
+                            <p className="titleMedium">{data.lucky}</p>
                             <LuckyIcon />
                         </div>
                     </div>
