@@ -49,10 +49,11 @@ const GamePage = () => {
             lastDamageTime: "yyyy-MM-dd HH:mm:ss",
         },
     ]
+
     return (
         <>
-            {a.map((data) => (
-                <CharacterArticle data={data} />
+            {a.map((data, idx) => (
+                <CharacterArticle data={data} idx={idx} />
             ))}
         </>
     )
