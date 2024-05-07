@@ -8,7 +8,7 @@ interface SelectAreaProps {
 
 export const SelectArea = ({ data }: SelectAreaProps) => {
     return (
-        <div className="container">
+        <div className="selectArea-container">
             <div>
                 <img src={GrassBlockImg} /> {/* 명세 나오는거 보고 수정해야할 듯 */}
                 <button className="grayButton">지역 선택</button>
