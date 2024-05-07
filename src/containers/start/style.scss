@@ -1,8 +1,106 @@
-.startButtonBlock {
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-    align-items: center;
-    justify-content: center;
-    width: 500px;
+@import "../../libs/styles/theme.scss";
+
+@include mobile {
+    .startButtonBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 80%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 80%;
+        margin-bottom: 12%;
+    }
+}
+
+@include tabletToMobile {
+    .startButtonBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 60%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 65%;
+        margin-bottom: 12%;
+    }
+}
+
+@include tablet {
+    .startButtonBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 50%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 55%;
+        margin-bottom: 12%;
+    }
+}
+
+@include laptopToTablet {
+    .startButtonBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 40%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 45%;
+        margin-bottom: 14%;
+    }
+}
+
+@include laptop {
+    .startButtonBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        width: 35%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 40%;
+        margin-bottom: 5%;
+    }
+}
+
+@include desktopToLaptop {
+    .startButtonBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        width: 30%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 35%;
+        margin-bottom: 5%;
+    }
+}
+
+@include desktop {
+    .startButtonBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        width: 30%;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo {
+        width: 35%;
+        margin-bottom: 5%;
+    }
 }
