@@ -5,7 +5,10 @@ import { ICharacteListResponse } from "./type"
 
 const ROUTER = "/characters"
 
-export const useCharacterList = (): ICharacteListResponse => {
+interface IDataResponse {
+    data: ICharacteListResponse
+}
+export const useCharacterList = (): IDataResponse => {
     const response = async () => {
         return (await instance.get(`${ROUTER}/list`)).data
     }
@@ -19,5 +22,5 @@ export const useCharacterList = (): ICharacteListResponse => {
         console.error("캐릭터 목록 에러", error)
     }
 
-    return data
+    return { data }
 }

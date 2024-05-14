@@ -3,11 +3,12 @@ import { CharacterArticle } from "../characterArticle"
 import { useCharacterList } from "@/apis/characters"
 
 export const CharacterList = () => {
-    const { character_list: data } = useCharacterList()
+    const { data } = useCharacterList()
+    const { character_list } = data
 
     return (
         <div className="characterList-container">
-            {data.map((v, idx) => (
+            {character_list.map((v, idx) => (
                 <CharacterArticle data={v} idx={idx} />
             ))}
         </div>
