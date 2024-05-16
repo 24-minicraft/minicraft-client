@@ -15,7 +15,7 @@ export const GameLayout = ({ children, seedNode, characterListNode, regionNode, 
             </div>
             <div>{children}</div>
             <div>
-                <div>{settingNode}</div>
+                <div>{regionNode}</div>
                 <div>{characterListNode}</div>
             </div>
         </div>
