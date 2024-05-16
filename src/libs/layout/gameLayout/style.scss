@@ -1,0 +1,13 @@
+.gameLayout {
+    &-container {
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 4fr 1fr;
+        > div {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    }
+}
