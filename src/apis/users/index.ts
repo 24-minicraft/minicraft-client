@@ -71,5 +71,14 @@ export const useInquiredSeeds = () => {
         const { data } = await instance.get(`${ROUTER}/seeds`)
         return data
     }
-    return useQuery({ queryKey: ["seeds"], queryFn: response })
+    const { isError, data, error } = useQuery({
+        queryKey: ["inquiredSeeds"],
+        queryFn: response,
+    })
+
+    if (isError) {
+        console.error("시드 조회 에러", error)
+    }
+
+    return { data }
 }
