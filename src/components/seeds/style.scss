@@ -1,0 +1,19 @@
+@import "../../libs/styles/theme.scss";
+
+.seedsBlock {
+    width: max-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    .spanBlock {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+        .seedText {
+            @include font("hs");
+        }
+    }
+}
