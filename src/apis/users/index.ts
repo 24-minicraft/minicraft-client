@@ -1,5 +1,5 @@
 import { instance } from "../axios"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { customCookie } from "@/libs/CustomCookie"
 import { IAuthParam, ITokenResponse } from "./type"
 
@@ -64,4 +64,21 @@ export const useReissue = () => {
             //error 메세지
         },
     })
+}
+
+export const useInquiredSeeds = () => {
+    const response = async () => {
+        const { data } = await instance.get(`${ROUTER}/seeds`)
+        return data
+    }
+    const { isError, data, error } = useQuery({
+        queryKey: ["inquiredSeeds"],
+        queryFn: response,
+    })
+
+    if (isError) {
+        console.error("시드 조회 에러", error)
+    }
+
+    return { data }
 }

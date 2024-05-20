@@ -8,3 +8,7 @@ export interface ITokenResponse {
     refresh_token: string
     expire_at: string
 }
+
+export interface ISeeds {
+    seeds: number
+}
