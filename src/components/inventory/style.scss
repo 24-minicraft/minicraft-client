@@ -1,0 +1,40 @@
+@import "../../libs/styles/theme.scss";
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inventory-container {
+    background-color: $gray_300;
+    display: grid;
+    width: fit-content;
+    padding: 10px;
+    gap: 10px;
+
+    .inventory-item {
+        @include flex-center;
+        position: relative;
+        width: 64px;
+        height: 64px;
+        background-color: $gray_100;
+        box-shadow: -1px -1px 4px 0px rgba(0, 0, 0, 0.5);
+
+        &-selected {
+            @include flex-center;
+            background-color: $gray_100;
+            position: relative;
+            border: 2px solid $white;
+            box-shadow: -1px -1px 4px 0px rgba(0, 0, 0, 0.5);
+        }
+    }
+
+    .item-num {
+        @include font("ll");
+        color: $white;
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+    }
+}
