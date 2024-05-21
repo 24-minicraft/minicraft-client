@@ -1,6 +1,8 @@
+"use client"
+import "./style.scss"
+import { useEffect, useState } from "react"
 import { ICharacterArticle } from "@/types/character.type"
 import { BattleIcon, CollectionIcon, DefenseIcon, HealthIcon, HealthPlusIcon, LuckyIcon } from "@/assets/icons"
-import "./style.scss"
 import { userImage } from "@/libs/constant/userImage"
 
 interface ICharacterArticleProps {
@@ -9,6 +11,17 @@ interface ICharacterArticleProps {
 }
 
 export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
+    const now = new Date()
+    const [recoveryTime, setRecoveryTime] = useState<number | null>(null)
+
+    useEffect(() => {
+        if (data.lastDamageTime === null) return
+
+        const givenTime = new Date(data.lastDamageTime)
+        const diff = now.getTime() - givenTime.getTime()
+        setRecoveryTime(Math.floor(diff / 1000) % 60)
+    }, [data])
+
     return (
         <div className="characterArticle-container">
             <div className="state">

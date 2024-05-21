@@ -4,6 +4,7 @@ import LoginPage from "@/pages/LoginPage"
 import SignupPage from "@/pages/SignupPage"
 import GamePage from "./pages/GamePage"
 import NotFoundPage from "./pages/NotFoundPage"
+import { SelectAreaPage } from "./pages/SelectArea"
 
 const Router = () => {
     return (
@@ -14,6 +15,7 @@ const Router = () => {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/game" element={<GamePage />} />
+                <Route path="/selectarea" element={<SelectAreaPage />} />
             </Routes>
         </BrowserRouter>
     )

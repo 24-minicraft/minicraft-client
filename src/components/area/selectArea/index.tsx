@@ -1,22 +1,31 @@
-import { GrassBlockImg } from "@/assets"
+import { AreaType } from "@/types/area.type"
 import "./style.scss"
-import { ChangeAreaType } from "@/types/area.type"
+import { areaItem } from "../nowArea"
+import { useNavigate } from "react-router-dom"
 
 interface SelectAreaProps {
-    data: ChangeAreaType
+    type: AreaType
 }
 
-export const SelectArea = ({ data }: SelectAreaProps) => {
+export const SelectArea = ({ type }: SelectAreaProps) => {
+    const nav = useNavigate()
     return (
         <div className="selectArea-container">
             <div>
-                <img src={GrassBlockImg} /> {/* 명세 나오는거 보고 수정해야할 듯 */}
-                <button className="grayButton">지역 선택</button>
+                <img src={areaItem[type].image} /> {/* 명세 나오는거 보고 수정해야할 듯 */}
+                <button
+                    className="grayButton"
+                    onClick={() => {
+                        nav(`/game?area=${type}`)
+                    }}
+                >
+                    지역 선택
+                </button>
             </div>
             <div className="items">
-                <p className="title">{data.name}</p>
+                <p className="title">{areaItem[type].name}</p>
                 <ul>
-                    {data.itemList.map((item, index) => (
+                    {areaItem[type].itemList.map((item, index) => (
                         <li key={item + index}>{item}</li>
                     ))}
                 </ul>

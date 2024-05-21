@@ -6,3 +6,4 @@ export { default as CollectionIcon } from "./icons/collection" //파견
 export { default as BattleIcon } from "./icons/battle" // 전투
 
 export { default as GrassBlockImg } from "./images/grassBlock.png" // 잔디블록
+export { default as StoneBlockImg } from "./images/stoneBlock.png" // 돌블록
