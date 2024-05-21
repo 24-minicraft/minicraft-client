@@ -2,8 +2,10 @@ import { Fragment } from "react"
 import { useInput, useToggle } from "@/libs/hooks"
 import "../../../../libs/styles/components.scss"
 import { AuthInput } from "../../authInput"
+import { useRegister } from "@/apis/users"
 
 export const SignUp = () => {
+    const { mutate: registerMutation } = useRegister()
     const { value: pw1, onToggle: onTogglePw1 } = useToggle(false)
     const { value: pw2, onToggle: onTogglePw2 } = useToggle(false)
     const {
@@ -11,18 +13,23 @@ export const SignUp = () => {
         setForm: setValue,
         onChange,
     } = useInput({
-        id: "",
+        account_id: "",
         password: "",
         rePassword: "",
     })
+
+    const onSignup = () => {
+        const { account_id, password, rePassword } = value
+        if (password === rePassword && account_id && password) registerMutation(value)
+    }
 
     return (
         <Fragment>
             <AuthInput
                 label="아이디"
-                name="id"
+                name="account_id"
                 disabled={false}
-                value={value.id}
+                value={value.account_id}
                 onChange={onChange}
                 placeholder="아이디를 입력해주세요"
                 type="text"
@@ -49,7 +56,7 @@ export const SignUp = () => {
                 disabled={false}
                 type={pw2 ? "text" : "password"}
             />
-            <button className="grayButton" style={{ height: 50 }}>
+            <button className="grayButton" style={{ height: 50 }} onClick={onSignup}>
                 로그인
             </button>
         </Fragment>

@@ -1,59 +1,62 @@
 @import "../../../libs/styles/theme.scss";
 @import "../../../libs/styles/components.scss";
-
-.container {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    padding: 16px;
-    width: min-content;
-
-    background-color: $gray_50;
-    border: 2px solid $gray_300;
-    border-radius: 4px;
-    .state {
+.characterArticle {
+    &-container {
         display: flex;
-        align-items: center;
+        flex-direction: column;
         gap: 24px;
-        .character {
-            width: 120px;
-            height: 120px;
-            border-radius: 4px;
-        }
-        .infoContainer {
-            width: 157px;
+        padding: 16px;
+        width: min-content;
+        height: min-content;
+        min-width: 250px;
+
+        background-color: $gray_50;
+        border: 2px solid $gray_300;
+        border-radius: 4px;
+        .state {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            .info {
+            align-items: center;
+            gap: 24px;
+            .character {
+                width: 100px;
+                height: 100px;
+                border-radius: 4px;
+            }
+            .infoContainer {
+                width: 157px;
                 display: flex;
+                flex-direction: column;
+                gap: 10px;
+                .info {
+                    display: flex;
+                }
+            }
+        }
+
+        .buttonContainer {
+            display: flex;
+            gap: 26px;
+        }
+    }
+
+    &-iconContainer {
+        display: flex;
+        gap: 4px;
+        flex: 1;
+        .plus {
+            display: flex;
+            align-items: center;
+            p {
+                color: $inactive_red;
+                @include font("ts");
             }
         }
     }
 
-    .buttonContainer {
-        display: flex;
-        gap: 26px;
+    &-titleLarge {
+        @include font("tl");
     }
-}
-
-.iconContainer {
-    display: flex;
-    gap: 4px;
-    flex: 1;
-    .plus {
-        display: flex;
-        align-items: center;
-        p {
-            color: $inactive_red;
-            @include font("ts");
-        }
+    &-titleMedium {
+        @include font("tm");
     }
-}
-
-.titleLarge {
-    @include font("tl");
-}
-.titleMedium {
-    @include font("tm");
 }

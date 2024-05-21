@@ -1,8 +1,13 @@
+import { IEquipment } from "./item.type"
+import { IWork } from "./work.type"
+
 export interface ICharacterArticle {
-    image: string
+    id: number
     name: string
     health: number
     defense: number
-    luck: number
-    time: number
+    lucky: number
+    work: IWork
+    equipment_list: IEquipment[]
+    lastDamageTime: string | null
 }

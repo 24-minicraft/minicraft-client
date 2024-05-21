@@ -1,31 +1,33 @@
 import { ICharacterArticle } from "@/types/character.type"
 import { BattleIcon, CollectionIcon, DefenseIcon, HealthIcon, HealthPlusIcon, LuckyIcon } from "@/assets/icons"
 import "./style.scss"
+import { userImage } from "@/libs/constant/userImage"
 
 interface ICharacterArticleProps {
     data: ICharacterArticle
+    idx: number
 }
 
-export const CharacterArticle = ({ data }: ICharacterArticleProps) => {
+export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
     return (
-        <div className="container">
+        <div className="characterArticle-container">
             <div className="state">
-                <img src={data.image} className="character" />
+                <img src={userImage[idx]} className="character" />
 
                 <div className="infoContainer">
-                    <p className="titleLarge">{data.name}</p>
+                    <p className="characterArticle-titleLarge">{data.name}</p>
 
                     <div className="info">
-                        <div className="iconContainer">
-                            <p className="titleMedium">{data.health}</p>
+                        <div className="characterArticle-iconContainer">
+                            <p className="characterArticle-titleMedium">{data.health}</p>
                             <HealthIcon />
                             <div className="plus">
                                 <p className="plus">
                                     (
-                                    {Math.floor(data.time / 60)
+                                    {Math.floor(100 / 60)
                                         .toString()
                                         .padStart(2, "0")}
-                                    :{data.time % 60}
+                                    :{100 % 60}
                                 </p>
                                 <HealthPlusIcon />
                                 <p className="plus">)</p>
@@ -34,12 +36,12 @@ export const CharacterArticle = ({ data }: ICharacterArticleProps) => {
                     </div>
 
                     <div className="info">
-                        <div className="iconContainer">
-                            <p className="titleMedium">{data.defense}</p>
+                        <div className="characterArticle-iconContainer">
+                            <p className="characterArticle-titleMedium">{data.defense}</p>
                             <DefenseIcon />
                         </div>
-                        <div className="iconContainer">
-                            <p className="titleMedium">{data.luck}</p>
+                        <div className="characterArticle-iconContainer">
+                            <p className="characterArticle-titleMedium">{data.lucky}</p>
                             <LuckyIcon />
                         </div>
                     </div>
