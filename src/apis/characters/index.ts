@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/react-query"
-import { instance } from "../axios"
-import { ICharacterArticle } from "@/types/character.type"
+import { instance, serverState } from "../axios"
 import { ICharacteListResponse } from "./type"
+import { CharacterListResponse } from "@/constants/character"
 
 const ROUTER = "/characters"
 
-interface IDataResponse {
+export interface IDataResponse {
     data: ICharacteListResponse
 }
 export const useCharacterList = (): IDataResponse => {
+    if (serverState === "development") return CharacterListResponse
     const response = async () => {
         return (await instance.get(`${ROUTER}/list`)).data
     }

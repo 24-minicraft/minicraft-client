@@ -1,0 +1,16 @@
+.selectareamap {
+    &-container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 100vh;
+        > div {
+            &:nth-child(1) {
+                margin-top: 100px;
+            }
+            &:nth-child(2) {
+                margin-bottom: 300px;
+            }
+        }
+    }
+}
