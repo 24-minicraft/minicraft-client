@@ -1,6 +1,8 @@
-const CobblestoneItem = () => {
+import { IIconProps } from "@/types/common.type"
+
+const CobblestoneItem = ({ size = 32 }: IIconProps) => {
     return (
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="32" height="32" fill="url(#pattern0_929_17)" />
             <defs>
                 <pattern id="pattern0_929_17" patternContentUnits="objectBoundingBox" width="1" height="1">
