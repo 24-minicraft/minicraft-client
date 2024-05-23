@@ -1,7 +1,7 @@
 import { instance } from "../axios"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { customCookie } from "@/libs/CustomCookie"
-import { IAuthParam, ITokenResponse } from "./type"
+import { IAuthParam, ISeeds, ITokenResponse } from "./type"
 
 const ROUTER = "/users"
 
@@ -26,7 +26,7 @@ export const useLogin = () => {
 
 export const useRegister = () => {
     const response = async (params: IAuthParam) => {
-        return await instance.post(`/register`, params)
+        return await instance.post(`${ROUTER}/signup`, params)
     }
 
     return useMutation({
@@ -68,7 +68,7 @@ export const useReissue = () => {
 
 export const useInquiredSeeds = () => {
     const response = async () => {
-        const { data } = await instance.get(`${ROUTER}/seeds`)
+        const { data } = await instance.get<ISeeds>(`${ROUTER}/seeds`)
         return data
     }
     const { isError, data, error } = useQuery({
