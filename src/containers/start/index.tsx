@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 import { router } from "@/libs/constant/router"
 import { basicLogo } from "@/assets/logo"
 
-export const Start = () => {
+const Start = () => {
     const cookie = customCookie.get.accessToken()
     return (
         <Fragment>
@@ -31,3 +31,5 @@ export const Start = () => {
         </Fragment>
     )
 }
+
+export default Start
