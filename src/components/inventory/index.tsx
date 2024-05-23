@@ -11,8 +11,8 @@ interface IInventoryProps {
 
 const Inventory = ({ row, column, data }: IInventoryProps) => {
     const [selectedItem, setSelectedItem] = useState<number>(0)
-    const gridTemplateColumns = `repeat(${column}, minmax(64px, 1fr))`
-    const gridTemplateRows = `repeat(${row}, minmax(64px, auto))`
+    const gridTemplateColumns = `repeat(${column}, minmax(48px, 1fr))`
+    const gridTemplateRows = `repeat(${row}, minmax(48px, auto))`
     const totalCells = row * column
     const filledCells = data ? data.length : 0
     const emptyCells = totalCells - filledCells
@@ -30,14 +30,13 @@ const Inventory = ({ row, column, data }: IInventoryProps) => {
                         <span className="item-num">{item.amount}</span>
                     </div>
                 ))}
-            {data &&
-                [...Array(emptyCells)].map((_, index) => (
-                    <div
-                        key={`empty-${index}`}
-                        className={index + data.length === selectedItem ? `inventory-item-selected` : `inventory-item`}
-                        onClick={() => setSelectedItem(index + data.length)}
-                    ></div>
-                ))}
+            {[...Array(emptyCells)].map((_, index) => (
+                <div
+                    key={`empty-${index}`}
+                    className={index + filledCells === selectedItem ? `inventory-item-selected` : `inventory-item`}
+                    onClick={() => setSelectedItem(index + filledCells)}
+                ></div>
+            ))}
         </div>
     )
 }
