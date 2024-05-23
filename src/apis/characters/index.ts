@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
 import { instance, serverState } from "../axios"
-import { ICharacteListResponse } from "./type"
+import { ICharacterListResponse } from "./type"
 import { CharacterListResponse } from "@/constants/character"
 
 const ROUTER = "/characters"
 
 export interface IDataResponse {
-    data: ICharacteListResponse
     isLoading: boolean
+    data: ICharacterListResponse
 }
 
 export const useCharacterList = (): IDataResponse => {
