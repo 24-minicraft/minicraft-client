@@ -20,7 +20,7 @@ export const SignUp = () => {
 
     const onSignup = () => {
         const { account_id, password, rePassword } = value
-        if (password === rePassword && account_id && password) registerMutation(value)
+        if (password === rePassword && account_id && password) registerMutation({ account_id, password })
     }
 
     return (
@@ -57,7 +57,7 @@ export const SignUp = () => {
                 type={pw2 ? "text" : "password"}
             />
             <button className="grayButton" style={{ height: 50 }} onClick={onSignup}>
-                로그인
+                회원가입
             </button>
         </Fragment>
     )
