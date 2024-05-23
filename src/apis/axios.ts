@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "ax
 import { customCookie } from "@/libs/CustomCookie"
 import { useReissue } from "./users"
 
-export const serverState = "development"
+export let serverState = "live"
 
 export const instance = axios.create({
     baseURL: process.env.API_BASE_URL,

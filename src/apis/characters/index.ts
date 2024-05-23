@@ -7,21 +7,28 @@ const ROUTER = "/characters"
 
 export interface IDataResponse {
     data: ICharacteListResponse
+    isLoading: boolean
 }
+
 export const useCharacterList = (): IDataResponse => {
     if (serverState === "development") return CharacterListResponse
+
     const response = async () => {
-        return (await instance.get(`${ROUTER}/list`)).data
+        const { data } = await instance.get(`${ROUTER}/list`)
+        return data
     }
 
-    const { isError, data, error } = useQuery({
+    const { isError, data, error, isLoading } = useQuery({
         queryKey: ["characterList"],
         queryFn: response,
+        retryOnMount: false,
+        retry: 0,
     })
 
     if (isError) {
         console.error("캐릭터 목록 에러", error)
+        return CharacterListResponse
     }
 
-    return { data }
+    return { data, isLoading }
 }
