@@ -1,5 +1,5 @@
 import { ICharacterArticle } from "@/types/character.type"
 
-export interface ICharacteListResponse {
+export interface ICharacterListResponse {
     character_list: ICharacterArticle[]
 }

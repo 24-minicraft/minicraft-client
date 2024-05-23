@@ -1,11 +1,11 @@
 import "./style.scss"
 import { CharacterArticle } from "../characterArticle"
 import { useCharacterList } from "@/apis/characters"
-import { ICharacteListResponse } from "@/apis/characters/type"
+import { ICharacterListResponse } from "@/apis/characters/type"
 
 export const CharacterList = () => {
     const { data } = useCharacterList()
-    const { character_list }: ICharacteListResponse = data
+    const { character_list }: ICharacterListResponse = data
 
     return (
         <div className="characterList-container">
