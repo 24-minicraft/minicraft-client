@@ -1,4 +1,6 @@
-const CopperArmorItem = () => {
+import { IIconProps } from "@/types/common.type"
+
+const CopperArmorItem = ({ size = 32 }: IIconProps) => {
     return <></>
 }
 
