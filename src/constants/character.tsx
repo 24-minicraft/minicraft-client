@@ -11,12 +11,12 @@ export const CharacterListResponse: IDataResponse = {
                 lucky: 30,
                 work: {
                     type: "COLLECTION", // type:null
-                    start_time: "2024-05-16T12:00:05", // start_time:null
-                    duration: 180, //초(int) // duration:null
+                    start_time: "2024-05-22T14:40:05", // start_time:null
+                    duration: 10000, //초(int) // duration:null
                     region: "초원",
                 },
                 equipment_list: [{ category: "ACCESSORY", type: "가나다" }],
-                lastDamageTime: "2024-05-16T12:10:05", // null 가능
+                lastDamageTime: "2024-05-22T10:05:05", // null 가능
             },
             {
                 id: 2,
@@ -25,13 +25,13 @@ export const CharacterListResponse: IDataResponse = {
                 defense: 0,
                 lucky: 0,
                 work: {
-                    type: "COLLECTION", // type:null
-                    start_time: "yyyy-MM-dd HH:mm:ss", // start_time:null
-                    duration: 180, //초(int) // duration:null
-                    region: "sdf",
+                    type: "WAR", // type:null
+                    start_time: "2024-05-16T12:00:05", // start_time:null
+                    duration: 99, //초(int) // duration:null
+                    region: "초원",
                 },
-                equipment_list: [{ category: "ACCESSORY", type: "" }],
-                lastDamageTime: "yyyy-MM-dd HH:mm:ss", // null 가능
+                equipment_list: [{ category: "ACCESSORY", type: "가나다" }],
+                lastDamageTime: "2024-05-16T12:10:05", // null 가능
             },
             {
                 id: 3,
@@ -40,14 +40,15 @@ export const CharacterListResponse: IDataResponse = {
                 defense: 0,
                 lucky: 0,
                 work: {
-                    type: "COLLECTION", // type:null
-                    start_time: "yyyy-MM-dd HH:mm:ss", // start_time:null
-                    duration: 180, //초(int) // duration:null
-                    region: "sdf",
+                    type: null, // type:null
+                    start_time: null, // start_time:null
+                    duration: null, //초(int) // duration:null
+                    region: null,
                 },
-                equipment_list: [{ category: "ACCESSORY", type: "" }],
-                lastDamageTime: "yyyy-MM-dd HH:mm:ss", // null 가능
+                equipment_list: [],
+                lastDamageTime: null, // null 가능
             },
         ],
     },
+    isLoading: false,
 }

@@ -35,7 +35,10 @@
 
         .buttonContainer {
             display: flex;
-            gap: 26px;
+            gap: 10px;
+            > button {
+                width: 130px;
+            }
         }
     }
 
