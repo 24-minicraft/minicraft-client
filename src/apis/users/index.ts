@@ -21,7 +21,7 @@ export const useLogin = () => {
         onSuccess: (res) => {
             const { access_token, refresh_token, expired_at } = res
             customCookie.set.token(access_token, refresh_token, expired_at)
-            navigate("/game")
+            navigate("/game?area=forest")
             //success 메세지
         },
     })
