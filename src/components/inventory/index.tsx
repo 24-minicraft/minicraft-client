@@ -26,7 +26,7 @@ const Inventory = ({ row, column, data }: IInventoryProps) => {
                         className={index === selectedItem ? `inventory-item-selected` : `inventory-item`}
                         onClick={() => setSelectedItem(index)}
                     >
-                        {itemComponent[item.type]}
+                        {itemComponent[item.type][32]}
                         <span className="item-num">{item.amount}</span>
                     </div>
                 ))}
