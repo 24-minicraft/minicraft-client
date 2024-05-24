@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { instance, serverState } from "../axios"
 import { ICharacterListResponse } from "./type"
-import { CharacterListResponse } from "@/constants/character"
+import { CharacterListResponse } from "@/libs/constant/character"
 
 const ROUTER = "/characters"
 
