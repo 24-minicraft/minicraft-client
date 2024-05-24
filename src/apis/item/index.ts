@@ -6,7 +6,7 @@ const ROUTER = "item"
 
 export const useInquiredInventory = () => {
     const response = async () => {
-        const { data } = await instance.get<{ material: IInventory[] }>(`${ROUTER}/inventory`)
+        const { data } = await instance.get<{ materials: IInventory[] }>(`${ROUTER}/inventory`)
         return data
     }
 
@@ -30,6 +30,7 @@ export const useCollectItem = () => {
     return useMutation({
         mutationFn: response,
         mutationKey: ["collectItem"],
+
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["inquiredInventory"] })
         },

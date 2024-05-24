@@ -6,3 +6,4 @@ export { default as CollectionIcon } from "./collection" //파견
 export { default as BattleIcon } from "./battle" // 전투
 export { default as VisibleIcon } from "./visible" // 비밀번호 눈
 export { default as EmeraldIcon } from "./emerald" // 에메랄드 시드
+export { default as SettingIcon } from "./setting" // 에메랄드 시드

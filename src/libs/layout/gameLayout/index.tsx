@@ -1,4 +1,6 @@
 import "./style.scss"
+import { bg } from "@/assets/images"
+
 interface GameLayoutProps {
     children?: React.ReactNode
     seedNode?: React.ReactNode //  돈
@@ -8,7 +10,7 @@ interface GameLayoutProps {
 }
 export const GameLayout = ({ children, seedNode, characterListNode, regionNode, settingNode }: GameLayoutProps) => {
     return (
-        <div className="gameLayout-container">
+        <div style={{ background: `url(${bg}) no-repeat center/cover` }} className="gameLayout-container">
             <div>
                 <div>{seedNode}</div>
                 <div>{settingNode}</div>

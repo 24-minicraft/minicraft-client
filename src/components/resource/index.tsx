@@ -4,8 +4,8 @@ const Resource = ({ item, onclick, loading }: { item?: React.ReactNode; onclick:
     return (
         <div className="resourceBlock">
             {item}
-            <button className="collectionButton" onClick={onclick}>
-                {loading ? '수집' : '채집 중'}
+            <button className="collectionButton" onClick={loading ? onclick : undefined}>
+                {loading ? "수집" : "채집 중"}
             </button>
         </div>
     )
