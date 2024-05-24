@@ -1,10 +1,12 @@
 import "./style.scss"
 
-const Resource = ({ item }: { item?: React.ReactNode }) => {
+const Resource = ({ item, onclick, loading }: { item?: React.ReactNode; onclick: () => void; loading: boolean }) => {
     return (
         <div className="resourceBlock">
             {item}
-            <button className="collectionButton">수집</button>
+            <button className="collectionButton" onClick={onclick}>
+                {loading ? '수집' : '채집 중'}
+            </button>
         </div>
     )
 }
