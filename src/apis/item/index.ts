@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { instance } from "../axios"
-import { IInventory } from "./type"
+import { IInventory, ItemType } from "./type"
 
 const ROUTER = "item"
 
@@ -20,4 +20,21 @@ export const useInquiredInventory = () => {
     }
 
     return { data }
+}
+
+export const useCollectItem = () => {
+    const queryClient = useQueryClient()
+    const response = async (type: ItemType) => {
+        return await instance.patch(`${ROUTER}/${type}`)
+    }
+    return useMutation({
+        mutationFn: response,
+        mutationKey: ["collectItem"],
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["inquiredInventory"] })
+        },
+        onError: () => {
+            //error 메세지
+        },
+    })
 }
