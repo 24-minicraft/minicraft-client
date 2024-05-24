@@ -8,12 +8,12 @@ export const customCookie = {
         refreshToken: () => cookies.get("refresh_token"),
     },
     set: {
-        token: (accessToken: string, refreshToken: string, expire_at: string) => {
+        token: (accessToken: string, refreshToken: string, expired_at: string) => {
             const date = new Date()
             date.setDate(date.getDate() + 5)
 
             cookies.set("access_token", accessToken, {
-                expires: new Date(expire_at),
+                expires: new Date(expired_at),
             })
             cookies.set("refresh_token", refreshToken, {
                 expires: date,
