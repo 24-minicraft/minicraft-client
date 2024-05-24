@@ -6,7 +6,7 @@ import { CharacterListResponse } from "@/libs/constant/character"
 const ROUTER = "/characters"
 
 export interface IDataResponse {
-    isLoading: boolean
+    data: ICharacterListResponse
     data: ICharacterListResponse
 }
 
