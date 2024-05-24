@@ -6,7 +6,7 @@ export interface IAuthParam {
 export interface ITokenResponse {
     access_token: string
     refresh_token: string
-    expire_at: string
+    expired_at: string
 }
 
 export interface ISeeds {

@@ -2,10 +2,12 @@ import { instance } from "../axios"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { customCookie } from "@/libs/CustomCookie"
 import { IAuthParam, ISeeds, ITokenResponse } from "./type"
+import { useNavigate } from "react-router-dom"
 
 const ROUTER = "/users"
 
 export const useLogin = () => {
+    const navigate = useNavigate()
     const response = async (params: IAuthParam) => {
         return (await instance.post<ITokenResponse>(`${ROUTER}/login`, params)).data
     }
@@ -17,8 +19,9 @@ export const useLogin = () => {
             //error 메세지
         },
         onSuccess: (res) => {
-            const { access_token, refresh_token, expire_at } = res
-            customCookie.set.token(access_token, refresh_token, expire_at)
+            const { access_token, refresh_token, expired_at } = res
+            customCookie.set.token(access_token, refresh_token, expired_at)
+            navigate("/game")
             //success 메세지
         },
     })
@@ -56,8 +59,8 @@ export const useReissue = () => {
         mutationFn: response,
         mutationKey: ["reissue"],
         onSuccess: (res) => {
-            const { access_token, refresh_token, expire_at } = res
-            customCookie.set.token(access_token, refresh_token, expire_at)
+            const { access_token, refresh_token, expired_at } = res
+            customCookie.set.token(access_token, refresh_token, expired_at)
         },
         onError: () => {
             window.location.href = "/"
