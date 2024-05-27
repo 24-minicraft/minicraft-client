@@ -3,7 +3,7 @@ import { instance, serverState } from "../axios"
 import { ICharacterListResponse } from "./type"
 import { CharacterListResponse } from "@/libs/constant/character"
 
-const ROUTER = "/characters"
+const ROUTER = "characters"
 
 export interface IDataResponse {
     isLoading: boolean
@@ -11,8 +11,6 @@ export interface IDataResponse {
 }
 
 export const useCharacterList = (): IDataResponse => {
-    if (serverState === "development") return CharacterListResponse
-
     const response = async () => {
         const { data } = await instance.get(`${ROUTER}/list`)
         return data

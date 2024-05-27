@@ -14,36 +14,7 @@ const GamePage = () => {
             seedNode={
                 <>
                     <SeedsContainer />
-                    <Inventory
-                        column={5}
-                        row={10}
-                        data={
-                            data
-                                ? data?.materials
-                                : [
-                                      {
-                                          type: "LOG",
-                                          amount: 8,
-                                      },
-                                      {
-                                          type: "STICK",
-                                          amount: 12,
-                                      },
-                                      {
-                                          type: "STRAW",
-                                          amount: 22,
-                                      },
-                                      {
-                                          type: "COAL",
-                                          amount: 24,
-                                      },
-                                      {
-                                          type: "COBBLESTONE",
-                                          amount: 64,
-                                      },
-                                  ]
-                        }
-                    />
+                    <Inventory column={5} row={10} data={data && data?.materials} />
                 </>
             }
             characterListNode={<CharacterList />}

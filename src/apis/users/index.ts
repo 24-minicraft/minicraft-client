@@ -21,13 +21,14 @@ export const useLogin = () => {
         onSuccess: (res) => {
             const { access_token, refresh_token, expired_at } = res
             customCookie.set.token(access_token, refresh_token, expired_at)
-            navigate("/game?area=forest")
+            navigate("/")
             //success 메세지
         },
     })
 }
 
 export const useRegister = () => {
+    const navigate = useNavigate()
     const response = async (params: IAuthParam) => {
         return await instance.post(`${ROUTER}/signup`, params)
     }
@@ -39,6 +40,8 @@ export const useRegister = () => {
             //error 메세지
         },
         onSuccess: () => {
+            navigate("/signup")
+            alert("계정 생성을 성공하셨습니다")
             //success 메세지
         },
     })

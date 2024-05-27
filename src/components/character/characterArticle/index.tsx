@@ -5,6 +5,7 @@ import { ICharacterArticle } from "@/types/character.type"
 import { BattleIcon, CollectionIcon, DefenseIcon, HealthIcon, HealthPlusIcon, LuckyIcon } from "@/assets/icons"
 import { userImage } from "@/libs/constant/userImage"
 import { useWorkEnd, useWorkStart } from "@/apis/works"
+import { useNavigate, useSearchParams } from "react-router-dom"
 
 interface ICharacterArticleProps {
     data: ICharacterArticle
@@ -13,21 +14,26 @@ interface ICharacterArticleProps {
 
 const heartRecoveryTime = 36
 
-type IworkType = "WAR" | "COLLECTION" | null
+type IworkType = "BATTLE" | "COLLECTION"
 const today = new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" })
 
 export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
+    const [searchParams] = useSearchParams()
     const [recoveryTime, setRecoveryTime] = useState<number | null>(null) // 하트 복구 시간
     const [health, setHealth] = useState<number>(data.health)
 
     const [workTime, setWorkTime] = useState<number | null>(null)
     const now = new Date(today)
 
+    const NotActivityAlert = () => {
+        alert("이미 전투 또는 파견 중입니다")
+    }
+
     useEffect(() => {
-        if (data.lastDamageTime === null) {
+        if (data.last_damage_time === null) {
             setRecoveryTime(null)
         } else {
-            const givenTime = new Date(data.lastDamageTime)
+            const givenTime = new Date(data.last_damage_time)
             const diff = now.getTime() - givenTime.getTime()
             setRecoveryTime(Math.floor(diff / 1000) % heartRecoveryTime)
 
@@ -47,13 +53,11 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
     }, [data])
 
     useEffect(() => {
-        if (data.work.start_time === null) return
-        if (data.work.duration === null) return
+        if (data.work == null) return
 
         const workGivenTime = new Date(data.work.start_time)
         const workDiff = now.getTime() - workGivenTime.getTime()
         setWorkTime(Math.floor(data.work.duration - workDiff / 1000))
-
         const interval = setInterval(() => {
             setWorkTime((prev) => {
                 if (prev === null) return null
@@ -68,7 +72,7 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
         }, 1000)
 
         return () => clearInterval(interval)
-    }, [data])
+    }, [data.work])
 
     useEffect(() => {
         if (recoveryTime === null) return
@@ -89,40 +93,18 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
     const { data: startSuccessData, isSuccess: startIsSuccess, mutate: workStartMutate } = useWorkStart()
 
     const workIsEnd = () => {
-        workEndMutate({ character_id: data.id })
-        if (endIsSuccess) {
-            data.equipment_list = endSuccessData.materials
-            data.health = endSuccessData.health
-            data.work = {
-                type: null,
-                start_time: null,
-                duration: null,
-                region: null,
-            }
-        }
+        workEndMutate({ characterId: data.id })
     }
 
     const workStart = (type: IworkType) => {
-        if (data.work.type === "COLLECTION") {
-            alert("이미 파견 중입니다.")
-        } else if (data.work.type === "WAR") {
-            alert("이미 전투 중입니다.")
-        } else {
-            workStartMutate({
-                character_id: data.id,
-                type,
-            })
-            if (startIsSuccess) {
-            }
-            console.log(now.toISOString())
-            data.work = {
-                type: type,
-                start_time: now.toISOString(),
-                duration: 1000,
-                region: "초원",
-            }
-            console.log(data)
-        }
+        workStartMutate({
+            characterId: data.id,
+            type,
+            param: {
+                duration: 10,
+                region: (searchParams.get("area") as string) == "forest" ? "PLAINS" : "MINE",
+            },
+        })
     }
 
     return (
@@ -164,7 +146,7 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
                 </div>
             </div>
             <div className="buttonContainer">
-                {data.work.type === "COLLECTION" ? (
+                {data.work && data.work.type === "COLLECTION" ? (
                     workTime && workTime >= 0 ? (
                         <button className="greenButton">파견 중.. ({workTime}초)</button>
                     ) : (
@@ -174,13 +156,16 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
                         </button>
                     )
                 ) : (
-                    <button className="grayButton" onClick={() => workStart("COLLECTION")}>
+                    <button
+                        className="grayButton"
+                        onClick={() => (workTime && workTime >= 0 ? NotActivityAlert() : workStart("COLLECTION"))}
+                    >
                         <CollectionIcon />
                         파견
                     </button>
                 )}
 
-                {data.work.type === "WAR" ? (
+                {data.work && data.work.type === "BATTLE" ? (
                     workTime && workTime >= 0 ? (
                         <button className="greenButton">전투 중.. ({workTime}초)</button>
                     ) : (
@@ -190,7 +175,10 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
                         </button>
                     )
                 ) : (
-                    <button className="grayButton" onClick={() => workStart("WAR")}>
+                    <button
+                        className="grayButton"
+                        onClick={() => (workTime && workTime >= 0 ? NotActivityAlert() : workStart("BATTLE"))}
+                    >
                         <BattleIcon />
                         전투
                     </button>
