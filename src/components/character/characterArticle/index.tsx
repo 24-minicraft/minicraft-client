@@ -1,10 +1,11 @@
 "use client"
 import "./style.scss"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { ICharacterArticle } from "@/types/character.type"
 import { BattleIcon, CollectionIcon, DefenseIcon, HealthIcon, HealthPlusIcon, LuckyIcon } from "@/assets/icons"
 import { userImage } from "@/libs/constant/userImage"
 import { useWorkEnd, useWorkStart } from "@/apis/works"
+import { useSearchParams } from "react-router-dom"
 
 interface ICharacterArticleProps {
     data: ICharacterArticle
@@ -13,115 +14,124 @@ interface ICharacterArticleProps {
 
 const heartRecoveryTime = 36
 
-type IworkType = "WAR" | "COLLECTION" | null
+type IworkType = "BATTLE" | "COLLECTION"
 const today = new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" })
 
 export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
+    const [searchParams] = useSearchParams()
     const [recoveryTime, setRecoveryTime] = useState<number | null>(null) // 하트 복구 시간
     const [health, setHealth] = useState<number>(data.health)
+    const heartIntervalRef = useRef<any>(null)
 
     const [workTime, setWorkTime] = useState<number | null>(null)
+    const workTimeIntervalRef = useRef<any>(null)
     const now = new Date(today)
 
+    const NotActivityAlert = () => {
+        alert("이미 전투 또는 파견 중입니다")
+    }
+
     useEffect(() => {
-        if (data.lastDamageTime === null) {
+        const now = new Date()
+
+        if (data.last_damage_time === null) {
             setRecoveryTime(null)
         } else {
-            const givenTime = new Date(data.lastDamageTime)
+            const givenTime = new Date(data.last_damage_time)
             const diff = now.getTime() - givenTime.getTime()
-            setRecoveryTime(Math.floor(diff / 1000) % heartRecoveryTime)
+            const initialRecoveryTime = Math.floor(diff / 1000) % heartRecoveryTime
 
-            const interval = setInterval(() => {
+            setRecoveryTime(initialRecoveryTime)
+
+            if (heartIntervalRef.current) {
+                clearInterval(heartIntervalRef.current)
+            }
+
+            heartIntervalRef.current = setInterval(() => {
                 setRecoveryTime((prev) => {
-                    if (prev === null) return null
-
-                    if (prev === 0) {
-                        clearInterval(interval)
+                    if (prev === null || prev <= 0) {
+                        clearInterval(heartIntervalRef.current)
+                        heartIntervalRef.current = null
                         return null
                     }
                     return prev - 1
                 })
             }, 1000)
-            return () => clearInterval(interval)
+
+            return () => {
+                if (heartIntervalRef.current) {
+                    clearInterval(heartIntervalRef.current)
+                }
+            }
         }
-    }, [data])
+    }, [data, heartRecoveryTime])
 
     useEffect(() => {
-        if (data.work.start_time === null) return
-        if (data.work.duration === null) return
+        if (data.work == null) return
 
+        const now = new Date()
         const workGivenTime = new Date(data.work.start_time)
         const workDiff = now.getTime() - workGivenTime.getTime()
-        setWorkTime(Math.floor(data.work.duration - workDiff / 1000))
+        const initialWorkTime = Math.floor(data.work.duration - workDiff / 1000)
 
-        const interval = setInterval(() => {
+        setWorkTime(initialWorkTime)
+
+        if (workTimeIntervalRef.current) {
+            clearInterval(workTimeIntervalRef.current)
+        }
+
+        workTimeIntervalRef.current = setInterval(() => {
             setWorkTime((prev) => {
-                if (prev === null) return null
-
-                if (prev <= 0) {
-                    clearInterval(interval)
-                    setWorkTime(0)
-                    return null
+                if (prev === null || prev <= 0) {
+                    clearInterval(workTimeIntervalRef.current)
+                    workTimeIntervalRef.current = null
+                    return 0
                 }
                 return prev - 1
             })
         }, 1000)
 
-        return () => clearInterval(interval)
-    }, [data])
+        return () => {
+            if (workTimeIntervalRef.current) {
+                clearInterval(workTimeIntervalRef.current)
+            }
+        }
+    }, [data.work])
 
     useEffect(() => {
         if (recoveryTime === null) return
-        if (health === 100) {
-            setRecoveryTime(null)
-            return
-        }
+
         if (recoveryTime <= 0) {
             setHealth((prev) => {
-                if (prev === 100) return 100
+                setRecoveryTime(heartRecoveryTime)
+
                 return prev + 1
             })
-            setRecoveryTime(heartRecoveryTime)
         }
-    }, [recoveryTime])
+    }, [recoveryTime, health, heartRecoveryTime])
 
     const { data: endSuccessData, isSuccess: endIsSuccess, mutate: workEndMutate } = useWorkEnd()
     const { data: startSuccessData, isSuccess: startIsSuccess, mutate: workStartMutate } = useWorkStart()
 
     const workIsEnd = () => {
-        workEndMutate({ character_id: data.id })
+        workEndMutate({ characterId: data.id })
         if (endIsSuccess) {
-            data.equipment_list = endSuccessData.materials
-            data.health = endSuccessData.health
-            data.work = {
-                type: null,
-                start_time: null,
-                duration: null,
-                region: null,
-            }
+            data.work = null
+            setWorkTime(null)
         }
     }
 
     const workStart = (type: IworkType) => {
-        if (data.work.type === "COLLECTION") {
-            alert("이미 파견 중입니다.")
-        } else if (data.work.type === "WAR") {
-            alert("이미 전투 중입니다.")
-        } else {
-            workStartMutate({
-                character_id: data.id,
-                type,
-            })
-            if (startIsSuccess) {
-            }
-            console.log(now.toISOString())
-            data.work = {
-                type: type,
-                start_time: now.toISOString(),
-                duration: 1000,
-                region: "초원",
-            }
-            console.log(data)
+        workStartMutate({
+            characterId: data.id,
+            type,
+            param: {
+                duration: type === "BATTLE" ? Math.floor(Math.random() * 61) + 60 : Math.floor(Math.random() * 60) + 1,
+                region: (searchParams.get("area") as string) == "forest" ? "PLAINS" : "MINE",
+            },
+        })
+        if (startIsSuccess && type == "BATTLE") {
+            data.health -= 2
         }
     }
 
@@ -164,7 +174,7 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
                 </div>
             </div>
             <div className="buttonContainer">
-                {data.work.type === "COLLECTION" ? (
+                {data.work && data.work.type === "COLLECTION" ? (
                     workTime && workTime >= 0 ? (
                         <button className="greenButton">파견 중.. ({workTime}초)</button>
                     ) : (
@@ -174,13 +184,16 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
                         </button>
                     )
                 ) : (
-                    <button className="grayButton" onClick={() => workStart("COLLECTION")}>
+                    <button
+                        className="grayButton"
+                        onClick={() => (workTime && workTime >= 0 ? NotActivityAlert() : workStart("COLLECTION"))}
+                    >
                         <CollectionIcon />
                         파견
                     </button>
                 )}
 
-                {data.work.type === "WAR" ? (
+                {data.work && data.work.type === "BATTLE" ? (
                     workTime && workTime >= 0 ? (
                         <button className="greenButton">전투 중.. ({workTime}초)</button>
                     ) : (
@@ -190,7 +203,10 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
                         </button>
                     )
                 ) : (
-                    <button className="grayButton" onClick={() => workStart("WAR")}>
+                    <button
+                        className="grayButton"
+                        onClick={() => (workTime && workTime >= 0 ? NotActivityAlert() : workStart("BATTLE"))}
+                    >
                         <BattleIcon />
                         전투
                     </button>

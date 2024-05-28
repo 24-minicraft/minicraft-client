@@ -7,7 +7,7 @@ export interface ICharacterArticle {
     health: number
     defense: number
     lucky: number
-    work: IWork
+    work: IWork | null
     equipment_list: IEquipment[]
-    lastDamageTime: string | null
+    last_damage_time: string | null
 }

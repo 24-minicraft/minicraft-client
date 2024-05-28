@@ -15,7 +15,7 @@ const Start = () => {
                 {cookie
                     ? router.login.map((e) => (
                           <Link to={e.url}>
-                              <button className="grayButton" style={{ height: 50 }}>
+                              <button className="grayButton" style={{ height: 50 }} onClick={e.event}>
                                   {e.tab}
                               </button>
                           </Link>

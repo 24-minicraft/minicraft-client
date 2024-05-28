@@ -1,6 +1,6 @@
 export interface IWork {
-    type: "WAR" | "COLLECTION" | null
-    start_time: string | null
-    duration: number | null
-    region: string | null
+    type: "BATTLE" | "COLLECTION"
+    start_time: string
+    duration: number
+    region: string
 }
