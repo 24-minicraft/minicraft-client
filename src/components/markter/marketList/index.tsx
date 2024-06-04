@@ -15,12 +15,13 @@ export const MarketList = ({ marketType }: { marketType: "sell" | "buy" }) => {
 
     return (
         <div className="marketlist-container">
-            {marketType}
-            {marketType === "sell" && data?.data?.materials
-                ? data?.data.materials?.map((item, index) => <SellArticle item={item} key={index} />)
-                : marketType === "buy" &&
-                  data?.data.equipments &&
-                  data?.data.equipments?.map((item, index) => <BuyArticle item={item} key={index} />)}
+            {marketType === "sell" && data?.data?.materials ? (
+                data?.data.materials?.map((item, index) => <SellArticle item={item} key={index} />)
+            ) : marketType === "buy" && data?.data.equipments ? (
+                data?.data.equipments?.map((item, index) => <BuyArticle item={item} key={index} />)
+            ) : (
+                <p className="title">{marketType === "sell" ? "판매" : "구매"} 목록이 없음</p>
+            )}
         </div>
     )
 }
