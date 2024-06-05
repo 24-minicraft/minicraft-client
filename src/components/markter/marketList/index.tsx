@@ -2,7 +2,7 @@ import { DefenseIcon, EmeraldIcon, HealthIcon, LuckyIcon } from "@/assets/icons"
 import "./style.scss"
 import { useSearchParams } from "react-router-dom"
 import { useState } from "react"
-import { useMarketList } from "@/apis/market"
+import { useMarket, useMarketList } from "@/apis/market"
 import { EquipmentsType, MaterialType } from "@/apis/market/type"
 
 type DataType = {
@@ -15,10 +15,10 @@ export const MarketList = ({ marketType }: { marketType: "sell" | "buy" }) => {
 
     return (
         <div className="marketlist-container">
-            {marketType === "sell" && data?.data?.materials ? (
-                data?.data.materials?.map((item, index) => <SellArticle item={item} key={index} />)
-            ) : marketType === "buy" && data?.data.equipments ? (
-                data?.data.equipments?.map((item, index) => <BuyArticle item={item} key={index} />)
+            {marketType === "sell" && data?.materials ? (
+                data?.materials?.map((item, index) => <SellArticle item={item} key={index} />)
+            ) : marketType === "buy" && data?.equipments ? (
+                data?.equipments?.map((item, index) => <BuyArticle item={item} key={index} />)
             ) : (
                 <p className="title">{marketType === "sell" ? "판매" : "구매"} 목록이 없음</p>
             )}
@@ -27,6 +27,7 @@ export const MarketList = ({ marketType }: { marketType: "sell" | "buy" }) => {
 }
 
 const SellArticle = ({ item }: { item: MaterialType }) => {
+    const { mutate } = useMarket()
     return (
         <div className="marketlist-article">
             <div className="header">
@@ -36,12 +37,24 @@ const SellArticle = ({ item }: { item: MaterialType }) => {
                     {item.price}
                 </div>
             </div>
-            <button className="greenButton">판매</button>
+            <button
+                className="greenButton"
+                onClick={() => {
+                    mutate({
+                        materialType: item.type,
+                        type: "sell",
+                    })
+                }}
+            >
+                판매
+            </button>
         </div>
     )
 }
 
 const BuyArticle = ({ item }: { item: EquipmentsType }) => {
+    const { mutate } = useMarket()
+
     return (
         <div className="marketlist-article">
             <div className="header">
@@ -62,7 +75,18 @@ const BuyArticle = ({ item }: { item: EquipmentsType }) => {
                     <LuckyIcon /> {item.lucky}
                 </div>
             </div>
-            <button className="greenButton">구매</button>
+            <button
+                className="greenButton"
+                disabled={item.price > 100}
+                onClick={() => {
+                    mutate({
+                        materialType: item.type,
+                        type: "buy",
+                    })
+                }}
+            >
+                구매
+            </button>
         </div>
     )
 }
