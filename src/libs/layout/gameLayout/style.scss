@@ -1,14 +1,14 @@
-.gameLayout {
-    &-container {
-        width: 100vw;
-        height: 100vh;
-        display: grid;
-        padding: 20px;
-        grid-template-columns: 1fr 3fr 1fr;
-        > div {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-    }
+.gameLayout-container {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    padding: 20px;
+    background-image: url("@/assets/images/bg.png");
+    grid-template-columns: auto 3fr 1fr;
+}
+
+.gameLayout-container > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

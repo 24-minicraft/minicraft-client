@@ -6,6 +6,7 @@ import { BattleIcon, CollectionIcon, DefenseIcon, HealthIcon, HealthPlusIcon, Lu
 import { userImage } from "@/libs/constant/userImage"
 import { useWorkEnd, useWorkStart } from "@/apis/works"
 import { useSearchParams } from "react-router-dom"
+import { useEquipmentModalStore } from "@/libs/provider/EquipmentProvider"
 
 interface ICharacterArticleProps {
     data: ICharacterArticle
@@ -18,6 +19,7 @@ type IworkType = "BATTLE" | "COLLECTION"
 const today = new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" })
 
 export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
+    const { openModal } = useEquipmentModalStore((state) => state)
     const [searchParams] = useSearchParams()
     const [recoveryTime, setRecoveryTime] = useState<number | null>(null) // 하트 복구 시간
     const [health, setHealth] = useState<number>(data.health)
@@ -25,8 +27,6 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
 
     const [workTime, setWorkTime] = useState<number | null>(null)
     const workTimeIntervalRef = useRef<any>(null)
-    const now = new Date(today)
-
     const NotActivityAlert = () => {
         alert("이미 전투 또는 파견 중입니다")
     }
@@ -101,11 +101,20 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
     useEffect(() => {
         if (recoveryTime === null) return
 
+        if (health === 100) {
+            setRecoveryTime(null)
+            return
+        }
+
         if (recoveryTime <= 0) {
             setHealth((prev) => {
-                setRecoveryTime(heartRecoveryTime)
-
-                return prev + 1
+                const newHealth = Math.min(prev + 1, 100)
+                if (newHealth === 100) {
+                    setRecoveryTime(null)
+                } else {
+                    setRecoveryTime(heartRecoveryTime)
+                }
+                return newHealth
             })
         }
     }, [recoveryTime, health, heartRecoveryTime])
@@ -138,7 +147,7 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
     return (
         <div className="characterArticle-container">
             <div className="state">
-                <img src={userImage[idx]} className="character" />
+                <img src={userImage[idx]} className="character" onClick={() => openModal(data.id, idx)} />
                 <div className="infoContainer">
                     <p className="characterArticle-titleLarge">{data.name}</p>
                     <div className="info">

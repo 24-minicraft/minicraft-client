@@ -64,6 +64,7 @@ export const useReissue = () => {
         onSuccess: (res) => {
             const { access_token, refresh_token, expired_at } = res
             customCookie.set.token(access_token, refresh_token, expired_at)
+            window.location.href = "/game"
         },
         onError: () => {
             window.location.href = "/"

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { instance } from "../axios"
-import { IInventory, ItemType } from "./type"
+import { IEquipment, IInventory, ItemType } from "./type"
 
 const ROUTER = "item"
 
@@ -36,4 +36,23 @@ export const useCollectItem = () => {
         },
         onError: () => {},
     })
+}
+
+export const useInquiredEquipment = () => {
+    const response = async () => {
+        const { data } = await instance.get<{ equipments: IEquipment[] }>(`${ROUTER}/equipment`)
+        const filteredData = data.equipments.filter((equipment) => equipment.is_use === false)
+        return { equipments: filteredData }
+    }
+
+    const { isError, data, error, isLoading } = useQuery({
+        queryKey: ["inquiredEquipment"],
+        queryFn: response,
+    })
+
+    if (isError) {
+        console.error("장비 조회 에러", error)
+    }
+
+    return { data, isLoading }
 }
