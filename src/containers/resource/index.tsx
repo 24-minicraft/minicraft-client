@@ -36,6 +36,12 @@ const ResourceContainer = () => {
                 mutate(type)
                 setLoadingMineStates((prevState) => ({ ...prevState, [type]: true }))
             }, time * 1000)
+        } else {
+            setLoadingMineStates((prevState) => ({ ...prevState, [type]: false }))
+            setTimeout(() => {
+                mutate(type)
+                setLoadingMineStates((prevState) => ({ ...prevState, [type]: true }))
+            }, time * 1000)
         }
     }
     const nav = useNavigate()

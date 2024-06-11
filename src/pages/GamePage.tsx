@@ -1,5 +1,4 @@
 import { useInquiredInventory } from "@/apis/item"
-import { SettingIcon } from "@/assets/icons"
 import { NowArea } from "@/components/area/nowArea"
 import { CharacterList } from "@/components/character/characterList"
 import Inventory from "@/components/inventory"
@@ -9,6 +8,7 @@ import { GameLayout } from "@/libs/layout/gameLayout"
 
 const GamePage = () => {
     const { data } = useInquiredInventory()
+
     return (
         <GameLayout
             seedNode={
@@ -19,7 +19,7 @@ const GamePage = () => {
             }
             characterListNode={<CharacterList />}
             regionNode={<NowArea select />}
-            settingNode={<SettingIcon />}
+            // settingNode={<SettingIcon />}
         >
             <ResourceContainer />
         </GameLayout>
