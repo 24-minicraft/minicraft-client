@@ -1,4 +1,4 @@
-import { IDataResponse } from "@/apis/characters"
+import { IDataResponse } from "@/apis/characters/type"
 
 export const CharacterListResponse: IDataResponse = {
     data: {

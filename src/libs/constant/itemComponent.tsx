@@ -23,7 +23,7 @@ import {
     StrawItem,
     WolfTalismanItem,
     WolfToothItem,
-    WoolToolSetItem,
+    WoodToolSetItem,
 } from "@/assets/items"
 
 // Define all items in the export object
@@ -123,10 +123,10 @@ export const itemComponent = {
         64: <StickItem size={64} />,
         128: <StickItem size={128} />,
     },
-    WOOL_TOOL_SET: {
-        32: <WoolToolSetItem size={32} />,
-        64: <WoolToolSetItem size={64} />,
-        128: <WoolToolSetItem size={128} />,
+    WOOD_TOOL_SET: {
+        32: <WoodToolSetItem size={32} />,
+        64: <WoodToolSetItem size={64} />,
+        128: <WoodToolSetItem size={128} />,
     },
     STONE_TOOL_SET: {
         32: <StoneToolSetItem size={32} />,

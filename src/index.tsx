@@ -5,6 +5,8 @@ import "./libs/styles/reset.scss"
 import App from "./App"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { EquipmentModalStoreContextProvider } from "./libs/provider/EquipmentProvider"
+import { InventoryStoreContextProvider } from "./libs/provider/InventoryProvider"
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -18,9 +20,13 @@ const queryClient = new QueryClient({
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
     <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <App />
-            <ReactQueryDevtools initialIsOpen={false} position="left" />
-        </QueryClientProvider>
+        <InventoryStoreContextProvider>
+            <EquipmentModalStoreContextProvider>
+                <QueryClientProvider client={queryClient}>
+                    <App />
+                    <ReactQueryDevtools initialIsOpen={false} position="left" />
+                </QueryClientProvider>
+            </EquipmentModalStoreContextProvider>
+        </InventoryStoreContextProvider>
     </React.StrictMode>,
 )

@@ -18,7 +18,7 @@ export type ItemType =
     | "IRON_INGOT"
     | "PLANKS"
     | "STICK"
-    | "WOOL_TOOL_SET"
+    | "WOOD_TOOL_SET"
     | "STONE_TOOL_SET"
     | "COPPER_TOOL_SET"
     | "IRON_TOOL_SET"
@@ -28,4 +28,14 @@ export type ItemType =
 export interface IInventory {
     type: ItemType
     amount: number
+}
+
+export interface IEquipment {
+    id: number
+    type: ItemType
+    category: string
+    health: number
+    defense: number
+    lucky: number
+    is_use: false
 }

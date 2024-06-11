@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { instance } from "../axios"
 import { IWorkEndResponse, IWorkStartResponse } from "./type"
+import { IWork } from "@/types/work.type"
+import { ICharacterArticle } from "@/types/character.type"
 
 const ROUTER = "works"
 
@@ -36,6 +38,7 @@ interface startProps {
 
 export const useWorkStart = () => {
     const queryClient = useQueryClient()
+
     const response = async ({ characterId, type, param }: startProps) => {
         return await instance.post(`${ROUTER}/start?characterId=${characterId}&type=${type}`, param)
     }
@@ -43,11 +46,47 @@ export const useWorkStart = () => {
     return useMutation({
         mutationKey: ["workStart"],
         mutationFn: response,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["characterList"] })
+        onMutate: async (newWork: startProps) => {
+            await queryClient.cancelQueries({ queryKey: ["characterList"] })
+
+            const previousCharacterList = queryClient.getQueryData<{ character_list: ICharacterArticle[] }>([
+                "characterList",
+            ])
+
+            queryClient.setQueryData<{ character_list: ICharacterArticle[] }>(["characterList"], (oldData) => {
+                if (!oldData || !Array.isArray(oldData.character_list)) {
+                    return { character_list: [] }
+                }
+
+                const updatedCharacterList = oldData.character_list.map((character) =>
+                    character.id === newWork.characterId
+                        ? {
+                              ...character,
+                              work: {
+                                  type: newWork.type,
+                                  start_time: new Date().toISOString(),
+                                  duration: newWork.param.duration,
+                                  region: newWork.param.region,
+                              } as IWork,
+                          }
+                        : character,
+                )
+
+                return { character_list: updatedCharacterList }
+            })
+
+            return { previousCharacterList }
         },
-        onError: (error) => {
+        onError: (error, newWork, context) => {
+            queryClient.setQueryData<{ character_list: ICharacterArticle[] }>(
+                ["characterList"],
+                context?.previousCharacterList,
+            )
             console.error("workStart 에러", error)
         },
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: ["characterList"] })
+        },
+        onSuccess: () => {},
     })
 }

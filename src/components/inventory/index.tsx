@@ -1,16 +1,20 @@
-import { useState } from "react"
 import { itemComponent } from "@/libs/constant/itemComponent"
 import "./style.scss"
-import { IInventory } from "@/apis/item/type"
+import { IEquipment, IInventory } from "@/apis/item/type"
+import { useInventoryStore } from "@/libs/provider/InventoryProvider"
 
 interface IInventoryProps {
     row: number
     column: number
-    data?: IInventory[]
+    data?: IInventory[] | IEquipment[]
+}
+
+const isInventoryItem = (item: IEquipment | IInventory): item is IInventory => {
+    return (item as IInventory).amount !== undefined
 }
 
 const Inventory = ({ row, column, data }: IInventoryProps) => {
-    const [selectedItem, setSelectedItem] = useState<number>(0)
+    const { selectedItem, setSelectedItem } = useInventoryStore((state) => state)
     const gridTemplateColumns = `repeat(${column}, minmax(48px, 1fr))`
     const gridTemplateRows = `repeat(${row}, minmax(48px, auto))`
     const totalCells = row * column
@@ -20,22 +24,22 @@ const Inventory = ({ row, column, data }: IInventoryProps) => {
     return (
         <div className="inventory-container" style={{ gridTemplateColumns, gridTemplateRows }}>
             {data &&
-                data.map((item, index) => (
+                data.map((item: IEquipment | IInventory, index) => (
                     <div
-                        key={item.type}
-                        className={index === selectedItem ? `inventory-item-selected` : `inventory-item`}
+                        key={`${item.type}-${index}`}
+                        className={index === selectedItem ? "inventory-item-selected" : "inventory-item"}
                         onClick={() => setSelectedItem(index)}
                     >
                         {itemComponent[item.type][32]}
-                        <span className="item-num">{item.amount}</span>
+                        {isInventoryItem(item) && <span className="item-num">{item.amount}</span>}
                     </div>
                 ))}
-            {[...Array(emptyCells)].map((_, index) => (
+            {Array.from({ length: emptyCells }, (_, index) => (
                 <div
                     key={`empty-${index}`}
-                    className={index + filledCells === selectedItem ? `inventory-item-selected` : `inventory-item`}
+                    className={index + filledCells === selectedItem ? "inventory-item-selected" : "inventory-item"}
                     onClick={() => setSelectedItem(index + filledCells)}
-                ></div>
+                />
             ))}
         </div>
     )

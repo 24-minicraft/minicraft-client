@@ -1,14 +1,10 @@
-import { useQuery } from "@tanstack/react-query"
-import { instance, serverState } from "../axios"
-import { ICharacterListResponse } from "./type"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { instance } from "../axios"
+import { IDataResponse, IEquipmentParam } from "./type"
 import { CharacterListResponse } from "@/libs/constant/character"
+import { IEquipment } from "../item/type"
 
 const ROUTER = "characters"
-
-export interface IDataResponse {
-    isLoading: boolean
-    data: ICharacterListResponse
-}
 
 export const useCharacterList = (): IDataResponse => {
     const response = async () => {
@@ -24,9 +20,35 @@ export const useCharacterList = (): IDataResponse => {
     })
 
     if (isError) {
-        console.error("캐릭터 목록 에러", error)
         return CharacterListResponse
     }
 
     return { data, isLoading }
+}
+
+export const useCharacterDetail = (id: number) => {
+    const response = async () => {
+        const { data } = await instance.get<{ equipment_list: Omit<IEquipment, "is_use">[] }>(`${ROUTER}/${id}`)
+        return data
+    }
+
+    const { isError, data, error, isLoading } = useQuery({
+        queryKey: ["characterDetail", id],
+        queryFn: response,
+        retryOnMount: false,
+        retry: 0,
+    })
+
+    return { data, isLoading }
+}
+
+export const useCharacterEquipment = () => {
+    const response = async (params: IEquipmentParam) => {
+        return await instance.patch(`${ROUTER}?characterId=${params.characterId}&equipmentId=${params.equipmentId}`)
+    }
+
+    return useMutation({
+        mutationFn: response,
+        mutationKey: ["equipCharacter"],
+    })
 }
