@@ -6,6 +6,7 @@ import GamePage from "./pages/GamePage"
 import NotFoundPage from "./pages/NotFoundPage"
 import { SelectAreaPage } from "./pages/SelectArea"
 import MarketPage from "./pages/Market"
+import { CraftPage } from "./pages/CraftPage"
 
 const Router = () => {
     return (
@@ -18,6 +19,7 @@ const Router = () => {
                 <Route path="/game" element={<GamePage />} />
                 <Route path="/selectarea" element={<SelectAreaPage />} />
                 <Route path="/market" element={<MarketPage />} />
+                <Route path="/craft" element={<CraftPage />} />
             </Routes>
         </BrowserRouter>
     )
