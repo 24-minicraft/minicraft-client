@@ -77,7 +77,6 @@ const BuyArticle = ({ item }: { item: EquipmentsType }) => {
             </div>
             <button
                 className="greenButton"
-                disabled={item.price > 100}
                 onClick={() => {
                     mutate({
                         materialType: item.type,
