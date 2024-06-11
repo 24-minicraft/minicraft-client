@@ -11,7 +11,7 @@ export interface IDataResponse {
 
 export const useCraftList = (): IDataResponse => {
     const response = async () => {
-        const { data } = await instance.get(`${ROUTER}/`)
+        const { data } = await instance.get(`${ROUTER}`)
         return data
     }
 
@@ -33,7 +33,7 @@ export const useCraftList = (): IDataResponse => {
 export const useCraft = () => {
     const queryClient = useQueryClient()
     const response = async (type: string) => {
-        const { data } = await instance.patch(`${ROUTER}/${type}`)
+        const { data } = await instance.put(`${ROUTER}/${type}`)
         return data
     }
 

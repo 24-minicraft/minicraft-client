@@ -25,7 +25,7 @@ export const useInquiredInventory = () => {
 export const useCollectItem = () => {
     const queryClient = useQueryClient()
     const response = async (type: ItemType) => {
-        return await instance.patch(`${ROUTER}/${type}`)
+        return await instance.put(`${ROUTER}/${type}`)
     }
     return useMutation({
         mutationFn: response,
@@ -34,8 +34,6 @@ export const useCollectItem = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["inquiredInventory"] })
         },
-        onError: () => {
-            //error 메세지
-        },
+        onError: () => {},
     })
 }
