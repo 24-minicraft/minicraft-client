@@ -1,0 +1,16 @@
+.maincraft {
+    &-container {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .box {
+            display: flex;
+            gap: 10px;
+            .bag {
+                display: flex;
+                gap: 30px;
+            }
+        }
+    }
+}

@@ -31,7 +31,7 @@ export const useMarket = () => {
     const queryClient = useQueryClient()
     const response = async (materialType: string, type: "sell" | "buy") => {
         if (type === "sell") {
-            const { data } = await instance.patch(`${ROUTER}/${type}/${materialType}`)
+            const { data } = await instance.put(`${ROUTER}/${type}/${materialType}`)
             return data
         } else {
             const { data } = await instance.post(`${ROUTER}/${type}/${materialType}`)
