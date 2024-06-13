@@ -136,7 +136,7 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
             characterId: data.id,
             type,
             param: {
-                duration: type === "BATTLE" ? Math.floor(Math.random() * 0) + 60 : Math.floor(Math.random() * 0) + 20,
+                duration: type === "BATTLE" ? Math.floor(Math.random() * 61) + 60 : Math.floor(Math.random() * 60) + 1,
                 region: (searchParams.get("area") as string) == "forest" ? "PLAINS" : "MINE",
             },
         })
