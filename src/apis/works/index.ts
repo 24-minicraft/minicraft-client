@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { instance } from "../axios"
-import { IWorkEndResponse, IWorkStartResponse } from "./type"
 import { IWork } from "@/types/work.type"
 import { ICharacterArticle } from "@/types/character.type"
+import { IWorkEndResponse } from "./type"
 
 const ROUTER = "works"
-
 export const useWorkEnd = () => {
     const queryClient = useQueryClient()
+
     const response = async (characterId: number) => {
-        const { data } = await instance.delete(`${ROUTER}/end?characterId=${characterId}`)
+        const { data } = await instance.delete<IWorkEndResponse>(`${ROUTER}/end?characterId=${characterId}`)
         return data
     }
 
