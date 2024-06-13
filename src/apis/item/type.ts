@@ -1,3 +1,5 @@
+import { IMaterials } from "../works/type"
+
 export type ItemType =
     | "LOG"
     | "STRAW"

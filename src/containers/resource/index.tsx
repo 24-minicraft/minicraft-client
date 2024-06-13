@@ -68,12 +68,12 @@ const ResourceContainer = () => {
                     >
                         <Resource
                             item={itemComponent["LOG"][128]}
-                            onclick={() => handleClick("LOG", 4)}
+                            onclick={() => handleClick("LOG", 2)}
                             loading={loadingForestStates["LOG"]}
                         />
                         <Resource
                             item={itemComponent["STRAW"][128]}
-                            onclick={() => handleClick("STRAW", 10)}
+                            onclick={() => handleClick("STRAW", 5)}
                             loading={loadingForestStates["STRAW"]}
                         />
                     </div>
@@ -94,19 +94,19 @@ const ResourceContainer = () => {
                         />
                         <Resource
                             item={itemComponent["COAL"][128]}
-                            onclick={() => handleClick("COAL", 5)}
+                            onclick={() => handleClick("COAL", 3)}
                             loading={loadingMineStates["COAL"]}
                         />
                         <Resource
                             item={itemComponent["COPPER_ORE"][128]}
-                            onclick={() => handleClick("COPPER_ORE", 15)}
+                            onclick={() => handleClick("COPPER_ORE", 10)}
                             loading={loadingMineStates["COPPER_ORE"]}
                         />
-                        {/* <Resource
-                        item={itemComponent["IRON_ORE"][128]}
-                        onclick={() => handleClick("IRON_ORE", 10)}
-                        loading={loadingMineStates["IRON_ORE"]}
-                    /> */}
+                        <Resource
+                            item={itemComponent["IRON_ORE"][128]}
+                            onclick={() => handleClick("IRON_ORE", 5)}
+                            loading={loadingMineStates["IRON_ORE"]}
+                        />
                     </div>
                 )}
                 <div

@@ -1,6 +1,13 @@
-const SettingIcon = () => {
+const SettingIcon = ({ onClick }: { onClick: () => void }) => {
     return (
-        <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="46"
+            height="46"
+            viewBox="0 0 46 46"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            onClick={onClick}
+        >
             <mask id="mask0_248_29" maskUnits="userSpaceOnUse" x="0" y="0" width="46" height="46">
                 <rect width="46" height="46" fill="#D9D9D9" />
             </mask>

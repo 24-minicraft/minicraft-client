@@ -7,6 +7,8 @@ import { userImage } from "@/libs/constant/userImage"
 import { useWorkEnd, useWorkStart } from "@/apis/works"
 import { useSearchParams } from "react-router-dom"
 import { useEquipmentModalStore } from "@/libs/provider/EquipmentProvider"
+import { itemComponent } from "@/libs/constant/itemComponent"
+import { IMaterials, IWorkEndResponse } from "@/apis/works/type"
 
 interface ICharacterArticleProps {
     data: ICharacterArticle
@@ -16,12 +18,14 @@ interface ICharacterArticleProps {
 const heartRecoveryTime = 36
 
 type IworkType = "BATTLE" | "COLLECTION"
-const today = new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" })
 
 export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
     const { openModal } = useEquipmentModalStore((state) => state)
+
+    const [modal, setModal] = useState(false)
+
     const [searchParams] = useSearchParams()
-    const [recoveryTime, setRecoveryTime] = useState<number | null>(null) // 하트 복구 시간
+    const [recoveryTime, setRecoveryTime] = useState<number | null>(null)
     const [health, setHealth] = useState<number>(data.health)
     const heartIntervalRef = useRef<any>(null)
 
@@ -108,13 +112,8 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
 
         if (recoveryTime <= 0) {
             setHealth((prev) => {
-                const newHealth = Math.min(prev + 1, 100)
-                if (newHealth === 100) {
-                    setRecoveryTime(null)
-                } else {
-                    setRecoveryTime(heartRecoveryTime)
-                }
-                return newHealth
+                setRecoveryTime(heartRecoveryTime)
+                return prev
             })
         }
     }, [recoveryTime, health, heartRecoveryTime])
@@ -124,10 +123,12 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
 
     const workIsEnd = () => {
         workEndMutate({ characterId: data.id })
-        if (endIsSuccess) {
-            data.work = null
-            setWorkTime(null)
-        }
+        data.work = null
+        setWorkTime(null)
+        setModal(true)
+        setTimeout(() => {
+            setModal(false)
+        }, 3000)
     }
 
     const workStart = (type: IworkType) => {
@@ -135,7 +136,7 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
             characterId: data.id,
             type,
             param: {
-                duration: type === "BATTLE" ? Math.floor(Math.random() * 61) + 60 : Math.floor(Math.random() * 60) + 1,
+                duration: type === "BATTLE" ? Math.floor(Math.random() * 0) + 60 : Math.floor(Math.random() * 0) + 20,
                 region: (searchParams.get("area") as string) == "forest" ? "PLAINS" : "MINE",
             },
         })
@@ -145,81 +146,102 @@ export const CharacterArticle = ({ data, idx }: ICharacterArticleProps) => {
     }
 
     return (
-        <div className="characterArticle-container">
-            <div className="state">
-                <img src={userImage[idx]} className="character" onClick={() => openModal(data.id, idx)} />
-                <div className="infoContainer">
-                    <p className="characterArticle-titleLarge">{data.name}</p>
-                    <div className="info">
-                        <div className="characterArticle-iconContainer">
-                            <p className="characterArticle-titleMedium">{health}</p>
-                            <HealthIcon />
-                            {recoveryTime !== null && (
-                                <div className="plus">
-                                    <p className="plus">(</p>
-                                    <p className="plus">
-                                        {Math.floor(recoveryTime / 60)
-                                            .toString()
-                                            .padStart(2, "0")}
-                                        :{recoveryTime % 60}
-                                    </p>
-                                    <HealthPlusIcon />
-                                    <p className="plus">)</p>
-                                </div>
-                            )}
+        <>
+            {modal && endIsSuccess && <ResultModal data={endSuccessData} />}
+            <div className="characterArticle-container">
+                <div className="state">
+                    <img src={userImage[idx]} className="character" onClick={() => openModal(data.id, idx)} />
+                    <div className="infoContainer">
+                        <p className="characterArticle-titleLarge">{data.name}</p>
+                        <div className="info">
+                            <div className="characterArticle-iconContainer">
+                                <p className="characterArticle-titleMedium">{health}</p>
+                                <HealthIcon />
+                                {recoveryTime !== null && (
+                                    <div className="plus">
+                                        <p className="plus">(</p>
+                                        <p className="plus">
+                                            {Math.floor(recoveryTime / 60)
+                                                .toString()
+                                                .padStart(2, "0")}
+                                            :{recoveryTime % 60}
+                                        </p>
+                                        <HealthPlusIcon />
+                                        <p className="plus">)</p>
+                                    </div>
+                                )}
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="info">
-                        <div className="characterArticle-iconContainer">
-                            <p className="characterArticle-titleMedium">{data.defense}</p>
-                            <DefenseIcon />
-                        </div>
-                        <div className="characterArticle-iconContainer">
-                            <p className="characterArticle-titleMedium">{data.lucky}</p>
-                            <LuckyIcon />
+                        <div className="info">
+                            <div className="characterArticle-iconContainer">
+                                <p className="characterArticle-titleMedium">{data.defense}</p>
+                                <DefenseIcon />
+                            </div>
+                            <div className="characterArticle-iconContainer">
+                                <p className="characterArticle-titleMedium">{data.lucky}</p>
+                                <LuckyIcon />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="buttonContainer">
-                {data.work && data.work.type === "COLLECTION" ? (
-                    workTime && workTime >= 0 ? (
-                        <button className="greenButton">파견 중.. ({workTime}초)</button>
+                <div className="buttonContainer">
+                    {data.work && data.work.type === "COLLECTION" ? (
+                        workTime && workTime >= 0 ? (
+                            <button className="greenButton">파견 중.. ({workTime}초)</button>
+                        ) : (
+                            <button className="greenButton" onClick={workIsEnd}>
+                                <CollectionIcon />
+                                파견 완료
+                            </button>
+                        )
                     ) : (
-                        <button className="greenButton" onClick={workIsEnd}>
+                        <button
+                            className="grayButton"
+                            onClick={() => (workTime && workTime >= 0 ? NotActivityAlert() : workStart("COLLECTION"))}
+                        >
                             <CollectionIcon />
-                            파견 완료
+                            파견
                         </button>
-                    )
-                ) : (
-                    <button
-                        className="grayButton"
-                        onClick={() => (workTime && workTime >= 0 ? NotActivityAlert() : workStart("COLLECTION"))}
-                    >
-                        <CollectionIcon />
-                        파견
-                    </button>
-                )}
+                    )}
 
-                {data.work && data.work.type === "BATTLE" ? (
-                    workTime && workTime >= 0 ? (
-                        <button className="greenButton">전투 중.. ({workTime}초)</button>
+                    {data.work && data.work.type === "BATTLE" ? (
+                        workTime && workTime >= 0 ? (
+                            <button className="greenButton">전투 중.. ({workTime}초)</button>
+                        ) : (
+                            <button className="greenButton" onClick={workIsEnd}>
+                                <BattleIcon />
+                                전투 완료
+                            </button>
+                        )
                     ) : (
-                        <button className="greenButton" onClick={workIsEnd}>
+                        <button
+                            className="grayButton"
+                            onClick={() => (workTime && workTime >= 0 ? NotActivityAlert() : workStart("BATTLE"))}
+                        >
                             <BattleIcon />
-                            전투 완료
+                            전투
                         </button>
-                    )
-                ) : (
-                    <button
-                        className="grayButton"
-                        onClick={() => (workTime && workTime >= 0 ? NotActivityAlert() : workStart("BATTLE"))}
-                    >
-                        <BattleIcon />
-                        전투
-                    </button>
-                )}
+                    )}
+                </div>
+            </div>
+        </>
+    )
+}
+
+const ResultModal = ({ data }: { data: IWorkEndResponse }) => {
+    return (
+        <div className="ModalWrapper">
+            <div className="ModalBlock">
+                <span>획득한 자원</span>
+                <div>
+                    {data.materials.map((e: IMaterials) => (
+                        <div key={e.type}>
+                            {itemComponent[e.type][32]}
+                            <span>{e.amount} 개</span>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     )

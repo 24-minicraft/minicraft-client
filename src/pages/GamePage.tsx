@@ -1,4 +1,5 @@
 import { useInquiredInventory } from "@/apis/item"
+import { SettingIcon } from "@/assets/icons"
 import { NowArea } from "@/components/area/nowArea"
 import { CharacterList } from "@/components/character/characterList"
 import Inventory from "@/components/inventory"
@@ -19,7 +20,7 @@ const GamePage = () => {
             }
             characterListNode={<CharacterList />}
             regionNode={<NowArea select />}
-            // settingNode={<SettingIcon />}
+            settingNode={<SettingIcon onClick={() => (window.location.href = "/")} />}
         >
             <ResourceContainer />
         </GameLayout>
